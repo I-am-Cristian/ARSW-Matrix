@@ -1,4 +1,4 @@
-package arsw;
+package main.java.arsw;
 
 public class Neo implements Runnable {
     private final Board board;

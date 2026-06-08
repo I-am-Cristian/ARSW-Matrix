@@ -1,4 +1,4 @@
-package arsw;
+package main.java.arsw;
 
 public class Position {
     public final int x;

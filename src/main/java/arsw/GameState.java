@@ -1,4 +1,4 @@
-package arsw;
+package main.java.arsw;
 
 public class GameState {
     private volatile boolean gameRunning = true;

@@ -1,5 +1,4 @@
-package arsw;
-
+package main.java.arsw;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

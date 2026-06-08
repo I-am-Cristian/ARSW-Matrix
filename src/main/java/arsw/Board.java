@@ -1,4 +1,4 @@
-package arsw;
+package main.java.arsw;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
