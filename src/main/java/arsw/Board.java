@@ -113,7 +113,7 @@ public class Board {
         if (isPhone(neoPos)) {
             gameState.setNeoWon(true);
             gameState.stopGame();
-            System.out.println("\n✨ ¡NEO LLEGÓ AL TELÉFONO! ✨");
+            System.out.println("\n¡NEO LLEGÓ AL TELÉFONO!");
             return true;
         }
 
@@ -134,7 +134,7 @@ public class Board {
         if (newPos.equals(neoPos)) {
             gameState.setNeoWon(false);
             gameState.stopGame();
-            System.out.println("\n🔴 ¡AGENTE " + agentIndex + " ATRAPÓ A NEO! 🔴");
+            System.out.println("\n¡AGENTE " + agentIndex + " ATRAPÓ A NEO!");
             return false;
         }
 
@@ -306,9 +306,9 @@ public class Board {
             System.out.println("|");
         }
         System.out.println("─".repeat(cols * 2 + 1));
-        System.out.println("📍 Neo en: " + neoPos);
-        System.out.println("👥 Agentes: " + agents);
-        System.out.println("📱 Teléfonos: " + getPhones());
+        System.out.println("Neo en: " + neoPos);
+        System.out.println("Agentes: " + agents);
+        System.out.println("Teléfonos: " + getPhones());
     }
 
     public boolean isGameRunning() {

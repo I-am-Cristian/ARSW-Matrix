@@ -15,7 +15,7 @@ public class Agent implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("👤 Agente " + agentId + " comenzó en " + currentPos);
+        System.out.println("Agente " + agentId + " comenzó en " + currentPos);
 
         while (gameState.isGameRunning()) {
             Position neoPos = board.getNeoPosition();

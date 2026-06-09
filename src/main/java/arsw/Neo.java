@@ -11,14 +11,14 @@ public class Neo implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("🟢 Neo inició en " + board.getNeoPosition());
+        System.out.println(" Neo inició en " + board.getNeoPosition());
 
         while (gameState.isGameRunning()) {
             Position currentPos = board.getNeoPosition();
             Position targetPhone = board.getClosestReachablePhone(currentPos);
 
             if (targetPhone == null) {
-                System.out.println("❌ No hay teléfonos alcanzables");
+                System.out.println(" No hay teléfonos alcanzables");
                 break;
             }
 
@@ -27,16 +27,16 @@ public class Neo implements Runnable {
                 board.display();
                 sleep();
             } else {
-                System.out.println("⚠️ Neo no puede moverse, esperando...");
+                System.out.println(" Neo no puede moverse, esperando...");
                 sleep();
             }
         }
 
         if (!gameState.isGameRunning()) {
             if (gameState.hasNeoWon()) {
-                System.out.println("\n🏆 ¡VICTORIA! Neo escapó de la Matrix 🏆");
+                System.out.println("\n ¡VICTORIA! Neo escapó de la Matrix");
             } else {
-                System.out.println("\n💀 DERROTA - Neo fue capturado 💀");
+                System.out.println("\n DERROTA - Neo fue capturado ");
             }
         }
     }
