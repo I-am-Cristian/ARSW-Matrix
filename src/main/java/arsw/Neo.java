@@ -1,4 +1,4 @@
-package main.java.arsw;
+package arsw;
 
 public class Neo implements Runnable {
     private final Board board;
@@ -15,14 +15,14 @@ public class Neo implements Runnable {
 
         while (gameState.isGameRunning()) {
             Position currentPos = board.getNeoPosition();
-            Position targetPhone = board.getClosestPhone(currentPos);
+            Position targetPhone = board.getClosestReachablePhone(currentPos);
 
             if (targetPhone == null) {
-                System.out.println("❌ No hay teléfonos disponibles");
+                System.out.println("❌ No hay teléfonos alcanzables");
                 break;
             }
 
-            Position nextMove = board.getNextStepTowards(currentPos, targetPhone);
+            Position nextMove = board.getNextStepTowards(currentPos, targetPhone, true);
             if (nextMove != null && board.moveNeo(nextMove)) {
                 board.display();
                 sleep();
@@ -39,40 +39,6 @@ public class Neo implements Runnable {
                 System.out.println("\n💀 DERROTA - Neo fue capturado 💀");
             }
         }
-    }
-
-    private Position getNextMove(Position current, Position target) {
-        int dx = Integer.compare(target.x, current.x);
-        int dy = Integer.compare(target.y, current.y);
-
-        if (dx != 0) {
-            Position newPos = new Position(current.x + dx, current.y);
-            if (board.isValidMoveForNeo(newPos)) {
-                return newPos;
-            }
-        }
-
-        if (dy != 0) {
-            Position newPos = new Position(current.x, current.y + dy);
-            if (board.isValidMoveForNeo(newPos)) {
-                return newPos;
-            }
-        }
-
-        Position[] alternatives = {
-            new Position(current.x + 1, current.y),
-            new Position(current.x - 1, current.y),
-            new Position(current.x, current.y + 1),
-            new Position(current.x, current.y - 1)
-        };
-
-        for (Position alt : alternatives) {
-            if (board.isValidMoveForNeo(alt)) {
-                return alt;
-            }
-        }
-
-        return null;
     }
 
     private void sleep() {

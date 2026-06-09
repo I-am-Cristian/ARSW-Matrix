@@ -1,4 +1,4 @@
-package main.java.arsw;
+package arsw;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -158,10 +158,14 @@ public class Board {
             return false;
         }
         char cell = grid[pos.x][pos.y];
-        return cell == EMPTY || cell == PHONE || cell == NEO;
+        return cell == EMPTY || cell == NEO;
     }
 
     public synchronized Position getNextStepTowards(Position from, Position target) {
+        return getNextStepTowards(from, target, false);
+    }
+
+    public synchronized Position getNextStepTowards(Position from, Position target, boolean movingNeo) {
         boolean[][] visited = new boolean[rows][cols];
         Position[][] parent = new Position[rows][cols];
         Queue<Position> queue = new ArrayDeque<>();
@@ -179,7 +183,7 @@ public class Board {
                 if (!isInsideBounds(next) || visited[next.x][next.y]) {
                     continue;
                 }
-                if (!isPassableForAgent(next) && !next.equals(target)) {
+                if (!isPassableForMover(next, movingNeo) && !next.equals(target)) {
                     continue;
                 }
                 visited[next.x][next.y] = true;
@@ -199,13 +203,63 @@ public class Board {
         return step.equals(from) ? target : step;
     }
 
+    public synchronized Position getClosestReachablePhone(Position from) {
+        Position closestPhone = null;
+        int shortestDistance = Integer.MAX_VALUE;
+
+        for (Phone phone : phones) {
+            Position phonePos = phone.getPosition();
+            int distance = getPathDistance(from, phonePos, true);
+            if (distance >= 0 && distance < shortestDistance) {
+                shortestDistance = distance;
+                closestPhone = phonePos;
+            }
+        }
+
+        return closestPhone;
+    }
+
+    private int getPathDistance(Position from, Position target, boolean movingNeo) {
+        boolean[][] visited = new boolean[rows][cols];
+        int[][] distance = new int[rows][cols];
+        Queue<Position> queue = new ArrayDeque<>();
+
+        queue.add(from);
+        visited[from.x][from.y] = true;
+
+        while (!queue.isEmpty()) {
+            Position current = queue.poll();
+            if (current.equals(target)) {
+                return distance[current.x][current.y];
+            }
+
+            for (int[] dir : DIRECTIONS) {
+                Position next = new Position(current.x + dir[0], current.y + dir[1]);
+                if (!isInsideBounds(next) || visited[next.x][next.y]) {
+                    continue;
+                }
+                if (!isPassableForMover(next, movingNeo) && !next.equals(target)) {
+                    continue;
+                }
+                visited[next.x][next.y] = true;
+                distance[next.x][next.y] = distance[current.x][current.y] + 1;
+                queue.add(next);
+            }
+        }
+
+        return -1;
+    }
+
     private boolean isInsideBounds(Position pos) {
         return pos.x >= 0 && pos.x < rows && pos.y >= 0 && pos.y < cols;
     }
 
-    private boolean isPassableForAgent(Position pos) {
+    private boolean isPassableForMover(Position pos, boolean movingNeo) {
         char cell = grid[pos.x][pos.y];
-        return cell == EMPTY || cell == PHONE || cell == NEO;
+        if (movingNeo) {
+            return cell == EMPTY || cell == PHONE;
+        }
+        return cell == EMPTY || cell == NEO;
     }
 
     public synchronized Position getNeoPosition() {

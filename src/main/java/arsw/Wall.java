@@ -1,4 +1,4 @@
-package main.java.arsw;
+package arsw;
 
 public class Wall {
     private final Position position;

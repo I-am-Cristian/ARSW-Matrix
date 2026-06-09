@@ -39,3 +39,11 @@ Proyecto Java en Maven que simula un tablero `N x M` con:
 - `src/main/java/arsw/GameState.java`
 - `src/main/java/arsw/Phone.java`
 - `src/main/java/arsw/Wall.java`
+
+### Pruebas
+
+![alt text](resources/image1.png)
+![alt text](resources/image2.png)
+![alt text](resources/image3.png)
+![alt text](resources/image4.png)
+![alt text](resources/image5.png)

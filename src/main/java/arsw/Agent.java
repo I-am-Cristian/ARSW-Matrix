@@ -1,4 +1,4 @@
-package main.java.arsw;
+package arsw;
 
 public class Agent implements Runnable {
     private final Board board;
@@ -19,7 +19,7 @@ public class Agent implements Runnable {
 
         while (gameState.isGameRunning()) {
             Position neoPos = board.getNeoPosition();
-            Position nextMove = board.getNextStepTowards(currentPos, neoPos);
+            Position nextMove = board.getNextStepTowards(currentPos, neoPos, false);
 
             if (nextMove != null && board.moveAgent(agentId, nextMove)) {
                 currentPos = nextMove;
